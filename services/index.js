@@ -41,32 +41,32 @@ export const getPosts = async () => {
 
 export const getPostDetails = async (slug) => {
   const query = gql`
-  query GetPostDetails($slug : String!) {
-    post(where: {slug: $slug}) {
-      title
-      excerpt
-      featuredImage {
-        url
-      }
-      author{
-        name
-        bio
-        photo {
+    query GetPostDetails($slug: String!) {
+      post(where: { slug: $slug }) {
+        title
+        excerpt
+        featuredImage {
           url
         }
-      }
-      createdAt
-      slug
-      content {
-        raw
-      }
-      categories {
-        name
+        author {
+          name
+          bio
+          photo {
+            url
+          }
+        }
+        createdAt
         slug
+        content {
+          raw
+        }
+        categories {
+          name
+          slug
+        }
       }
     }
-  }
-`;
+  `;
 
   const result = await request(graphqlAPI, query, { slug });
 
@@ -88,18 +88,21 @@ export const getRecentPosts = async () => {
         slug
       }
     }
-  `
+  `;
 
   const result = await request(graphqlAPI, query);
 
   return result.posts;
-}
+};
 
 export const getSimilarPosts = async (categories, slug) => {
   const query = gql`
     query GetPostDetails($slug: String!, $categories: [String!]) {
       posts(
-        where: { slug_not: $slug, AND: {categories_some: {slug_in: $categories}}}
+        where: {
+          slug_not: $slug
+          AND: { categories_some: { slug_in: $categories } }
+        }
         last: 3
       ) {
         title
@@ -110,12 +113,12 @@ export const getSimilarPosts = async (categories, slug) => {
         slug
       }
     }
-  `
+  `;
 
-  const result = await request(graphqlAPI, query, { categories, slug});
+  const result = await request(graphqlAPI, query, { categories, slug });
 
   return result.posts;
-}
+};
 
 export const getCategories = async () => {
   const query = gql`
@@ -125,9 +128,21 @@ export const getCategories = async () => {
         slug
       }
     }
-  `
+  `;
 
   const result = await request(graphqlAPI, query);
 
   return result.categories;
-}
+};
+
+export const submitComment = async (obj) => {
+  const result = await fetch("/api/comments", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
+  });
+
+  return result.json();
+};
