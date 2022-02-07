@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 
+// import { getCategories } from "../services";
+
 function NavLink({ to, children }) {
   return (
     <a href={to} className={`mx-4`}>
@@ -59,6 +61,7 @@ function MobileNav({ open, setOpen }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
   return (
     <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-20 items-center">
       <MobileNav open={open} setOpen={setOpen} />
@@ -66,8 +69,8 @@ export default function Navbar() {
         <a className="text-2xl font-semibold" href="/">
           <Image
             alt="african-trends-logo"
-            height="300px"
-            width="600px"
+            height="200px"
+            width="500px"
             className="align-middle drop-shadow-lg rounded-full"
             src="/cover.png"
           />
@@ -98,10 +101,20 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="hidden md:flex">
+        {/* <div className="hidden md:flex">
           <NavLink to="/contact">CONTACT</NavLink>
           <NavLink to="/about">ABOUT</NavLink>
-        </div>
+        </div> */}
+
+        {/* <div className="hidden md:float-left md:contents">
+          {categories.map((category, index) => (
+            <Link key={index} href={`/category/${category.slug}`}>
+              <span className="md:float-right mt-2 align-middle text-white ml-4 font-semibold cursor-pointer">
+                {category.name}
+              </span>
+            </Link>
+          ))}
+        </div> */}
       </div>
     </nav>
   );
