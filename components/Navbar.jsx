@@ -1,121 +1,38 @@
-import { useState } from "react";
+import Link from "next/Link";
 import Image from "next/image";
+import africanTrendsLogo from "/cover.png";
+import { CgProfile } from "react-icons/cg";
 
-// import { getCategories } from "../services";
+const style = {
+  wrapper: `bg-[#fff] w-screen px-[1.2rem] py-[0.2rem] mb-[2.2rem] flex align-center justify-between`,
+  logoContainer: `flex items-center cursor-pointer`,
+  logoText: ` ml-[0.8rem] text-white font-semibold text-2xl`,
+  searchBar: `flex flex-1 mx-[0.8rem] w-max-[480px] items-center bg-[#363840] rounded-[0.8rem] hover:bg-[#4c505c]`,
+  searchIcon: `text-[#8a939b] mx-3 font-bold text-lg`,
+  searchInput: `h-[2.6rem] w-full border-0 bg-transparent outline-0 ring-0 px-2 pl-0 text-[#e6e8eb] placeholder:text-[#8a939b]`,
+  headerItems: ` flex items-center justify-end`,
+  headerItem: `text-white px-4 font-bold text-[#c8cacd] hover:text-black cursor-pointer`,
+  headerIcon: `text-[#8a939b] text-3xl font-black px-4 hover:text-black cursor-pointer`,
+};
 
-function NavLink({ to, children }) {
+const Header = () => {
   return (
-    <a href={to} className={`mx-4`}>
-      {children}
-    </a>
-  );
-}
-
-function MobileNav({ open, setOpen }) {
-  return (
-    <div
-      className={`z-50 absolute top-0 left-0 h-screen w-screen bg-white transform ${
-        open ? "-translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out filter drop-shadow-md `}
-    >
-      <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20">
-        {" "}
-        {/*logo container*/}
-        <a className="text-xl font-semibold" href="/">
-          <Image
-            alt="african-trends-logo"
-            height="200px"
-            width="450px"
-            className="align-middle drop-shadow-lg rounded-full"
-            src="/cover.png"
-          />
-        </a>
-      </div>
-      <div className="flex flex-col ml-4">
-        <a
-          className="text-xl font-medium my-4"
-          href="/about"
-          onClick={() =>
-            setTimeout(() => {
-              setOpen(!open);
-            }, 100)
-          }
-        >
-          About
-        </a>
-        <a
-          className="text-xl font-normal my-4"
-          href="/contact"
-          onClick={() =>
-            setTimeout(() => {
-              setOpen(!open);
-            }, 100)
-          }
-        >
-          Contact
-        </a>
+    <div className={style.wrapper}>
+      <Link href="/">
+        <div className={style.logoContainer}>
+          <Image src={africanTrendsLogo} height={80} width={190} />
+        </div>
+      </Link>
+      <div className={style.headerItems}>
+        <div className={style.headerItem}> Ideas </div>
+        <div className={style.headerItem}> Cryptocurrency </div>
+        <div className={style.headerItem}> Startups </div>
+        <div className={style.headerIcon}>
+          <CgProfile />
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-20 items-center">
-      <MobileNav open={open} setOpen={setOpen} />
-      <div className="w-3/20 flex items-center">
-        <a className="text-2xl font-semibold" href="/">
-          <Image
-            alt="african-trends-logo"
-            height="200px"
-            width="500px"
-            className="align-middle drop-shadow-lg rounded-full"
-            src="/cover.png"
-          />
-        </a>
-      </div>
-      <div className="w-9/12 flex justify-end items-center">
-        <div
-          className="z-50 flex relative w-8 h-8 flex-col justify-between items-center md:hidden"
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          {/* hamburger button */}
-          <span
-            className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${
-              open ? "rotate-45 translate-y-3.5" : ""
-            }`}
-          />
-          <span
-            className={`h-1 w-full bg-black rounded-lg transition-all duration-300 ease-in-out ${
-              open ? "w-0" : "w-full"
-            }`}
-          />
-          <span
-            className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${
-              open ? "-rotate-45 -translate-y-3.5" : ""
-            }`}
-          />
-        </div>
-
-        {/* <div className="hidden md:flex">
-          <NavLink to="/contact">CONTACT</NavLink>
-          <NavLink to="/about">ABOUT</NavLink>
-        </div> */}
-
-        {/* <div className="hidden md:float-left md:contents">
-          {categories.map((category, index) => (
-            <Link key={index} href={`/category/${category.slug}`}>
-              <span className="md:float-right mt-2 align-middle text-white ml-4 font-semibold cursor-pointer">
-                {category.name}
-              </span>
-            </Link>
-          ))}
-        </div> */}
-      </div>
-    </nav>
-  );
-}
+export default Header;
